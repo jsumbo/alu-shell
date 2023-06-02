@@ -1,2 +1,2 @@
 #!/bin/bash
-tr A Z|tr c e
+tail -1 iacta >> iacta
