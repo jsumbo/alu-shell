@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# Bash script that starts, stops or restarts manage_my_process file
+
+function startup(){
+
+	 bash ./manage_my_process &
+	 
+	 echo "$!" > /var/run/my_process.pid
+	 
+}
+
+
+
+function stopnow(){
+
+	 [ -e "/var/run/my_process.pid" ] && pkill -f './manage_my_process' && rm /var/run/my_process.pid
+	 
+}
+
+
+
+function restartnow(){
+
+	 stopnow
+	 
+	 startup
+	 
+	 echo "manage_my_process restarted"
+	 
+}
+
+if [ $# -eq 1 ]
+
+then
+
+	OPTIONN="$1"
+	
+	case $OPTIONN in
+	
+	"start")
+	
+		startup
+		
+		echo "manage_my_process started"
+		
+		;;
+		
+		"stop")
+		
+			#stopnow
+			
+				stopnow
+				
+					echo "manage_my_process stopped"
+					
+					;;
+					
+        "restart")
+	
+	restartnow
+	
+	;;
+	
+	*)
+	
+	echo "Usage: manage_my_process {start|stop|restart}"
+	
+	;;
+	
+       esac
+       
+else
+
+	echo "Usage: manage_my_process {start|stop|restart}"
+	
+fi
